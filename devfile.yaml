@@ -1,0 +1,32 @@
+specVersion: 0.0.1
+name: demo-operator
+projects:
+- name: demo-operator
+  clonePath: src/github.com/eivantsov/demo-operator
+  source:
+    type: git
+    location: https://github.com/eivantsov/demo-operator.git
+components:
+  - name: theia-editor
+    type: cheEditor
+    id: org.eclipse.che.editor.theia:next
+  - name: exec-plugin
+    type: chePlugin
+    id: che-machine-exec-plugin:0.0.1
+  - name: k8s-plugin
+    type: chePlugin
+    id: ms-kubernetes-tools.vscode-kubernetes-tools:0.1.17
+  - name: ms-vscode.go
+    type: chePlugin
+    id: ms-vscode.go:0.9.2
+    memoryLimit: 3Gi
+  - name: dev
+    type: dockerimage
+    image: eclipse/che-machine-exec-dev
+    mountSources: true
+    memoryLimit: 2Gi
+    env:
+      - name: GOPATH
+        value: $(CHE_PROJECTS_ROOT)
+      - name: GOCACHE
+        value: $(GOPATH)/.cache
